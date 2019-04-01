@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>[admin]View Posts</title>
+</head>
+<body>
+  <form action="ViewUserPosts.php" method="post">
+     <?php
+     error_reporting(E_ALL);
+     ini_set("display_errors", 1);
+
+     $servername = "mysql.eecs.ku.edu";
+     $dbUsername = "c256k145";
+     $password = "aYohdei9";
+     $dbName = "c256k145";
+     $conn = new mysqli($servername, $dbUsername, $password, $dbName);
+
+     $users = "SELECT * from Users";
+     $result = $conn->query($users);
+     if($result->num_rows > 0) {
+       echo "<select method='post' name= 'userID'>";
+       while($row = $result->fetch_assoc()) {
+         echo "<option value= " . $row['user_id'] . " > " . $row["user_id"] . "</option>";
+       }
+       echo "</select>";
+       echo "<input type='submit' value='Submit'></input>";
+     }
+     else {
+       echo "There are no users in this table";
+     }
+
+     $conn->close();
+     ?>
+  </form>
